@@ -9,8 +9,8 @@ CREATE TABLE users (
     gender CHAR(1) NOT NULL,  -- M / F
     birthdate DATE NOT NULL,
     weekly_exercise_freq INTEGER NOT NULL,
-    usual_exercise_intensity VARCHAR(30),  -- 예: 맨날 뛰어 다닌다, 하루에 3걸음만 움직인다 등
-    preferred_exercise_type VARCHAR(10)  -- 예: "런닝, 플랭크"
+    usual_exercise_intensity INTEGER,  -- 예: 1~5까지 표현 -> 추후 도메인 정할 예정
+    preferred_exercise_type VARCHAR(10)  -- 예: "런닝, 플랭크" 등 추후 도메인 정할 예정
 );
 
 -- 운동 루틴 추가 테이블
@@ -21,8 +21,8 @@ CREATE TABLE exercise_routines (
     start_time TIME NOT NULL,  -- 운동 시작 시간
     end_time TIME NOT NULL,  -- 운동 종료 시간
     base_date DATE NOT NULL,  -- 반복을 위한 기준 날짜
-    repetition_type CHAR(1) NOT NULL,  -- D: Daily, W: Weekly, M: Monthly
-    repetition_value INTEGER NOT NULL
+    repetition_type INTEGER NOT NULL,  -- 미래를 위해
+    repetition_value INTEGER NOT NULL  -- 비트 단위로 표현
 );
 
 -- 운동 기록 테이블
