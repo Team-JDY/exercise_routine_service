@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "main": "build/electron/main.js",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -22,13 +23,13 @@
     "react:build": "react-scripts build",
     "react:test": "react-scripts test",
     "react:eject": "react-scripts eject",
-    "dev": "concurrently -k \"cross-env NODE_ENV=development BROWSER=none yarn react:start\" \"yarn tsc:watch\" \"yarn electron:start\"",
-    "tsc:watch": "wait-on http://localhost:3000 && tsc -p electron -w",
-    "electron:start": "wait-on https://localhost:3000 && tsc -p electron && electron .",
+    "dev": "start /b yarn react:start & start /b yarn tsc:watch & start /b yarn electron:start",
+    "tsc:watch": "start /wait http://localhost:3000 && tsc -p ./electron -w",
+    "electron:start": "start /wait https://localhost:3000 && tsc -p electron && electron .",
     "prebuild": "run-script-os",
     "prebuild:default": "rm -rf dist",
     "prebuild:windows": "rd /s /q dist || rem",
-    "build": "yarn react:build && tsc -p electron && electron-builder --publish=never --dir --x64",
+    "build": "yarn react:build && tsc -p ./electron && electron-builder --publish=never --dir --x64",
     "lint": "eslint './src/**/*.{ts,tsx,js,jsx}'"
   },
   "build": {
