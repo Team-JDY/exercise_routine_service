@@ -31,6 +31,33 @@
     "build": "yarn react:build && tsc -p electron && electron-builder --publish=never --dir --x64",
     "lint": "eslint './src/**/*.{ts,tsx,js,jsx}'"
   },
+  "build": {
+    "productName": "TestAPP",
+    "appId": "JDY",
+    "npmRebuild": false,
+    "extraMetadata": {
+      "main": "build/electron/main.js"
+    },
+    "files": [
+      "build/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "win": {
+      "icon": "public/logo192.png",
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "mac": {
+      "icon": "public/logo192.png"
+    }
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
