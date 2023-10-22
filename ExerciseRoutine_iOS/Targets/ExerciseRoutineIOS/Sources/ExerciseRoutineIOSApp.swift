@@ -5,7 +5,7 @@ import ExerciseRoutineIOSUI
 struct ExerciseRoutineIOSApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MeasureWeightView()
         }
     }
 }
