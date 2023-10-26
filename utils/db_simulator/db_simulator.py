@@ -22,7 +22,7 @@ class db_Simulator:
         self.exercise_list = ["사이클", "수영", "웨이트", "런닝", "걷기", "축구", "등산", "배드민턴", "농구", "크로스핏", "테니스", "골프",
                               "배구", "피구", "탁구", "클라이밍", "없음"]
         self.user_list = []
-        self.nickname_list = []
+        #self.nickname_list = []
         self.serial_list = []
 
         self.db_connector = None
@@ -33,14 +33,18 @@ class db_Simulator:
 
     def db_connect(self):
         '''db connection method'''
-        self.db_connector = psycopg2.connect(
-            dbname=self.db_name,
-            user=self.user,
-            password=self.passwd,
-            host=self.host,
-            port=self.port
-        )
-        self.db_manager = self.db_connector.cursor()
+        try:
+            self.db_connector = psycopg2.connect(
+                dbname=self.db_name,
+                user=self.user,
+                password=self.passwd,
+                host=self.host,
+                port=self.port
+            )
+            self.db_manager = self.db_connector.cursor()
+        except Exception as e:
+            print(e)
+            raise e
 
     def disconnect_db(self):
         '''db connection down'''
@@ -123,7 +127,7 @@ class db_Simulator:
         header = random.choices(["1", "0"], weights=[80, 20], k=1)[0]  # 1: 반복 / 0: 하루
         week = "".join([str(random.randint(0, 1)) for _ in range(7)])
 
-        return header + week
+        return int(header + week, 2)
 
     def generate_routine_count(self):
         '''Routine Count Random Generation Method'''
@@ -140,7 +144,7 @@ class db_Simulator:
         repeat_value = repeat_bit & 0b01111111
 
         if repeat_type == 0:
-            return [start_day]
+            return [current_day]
 
         date_list = []
         while current_day <= last_day:
@@ -161,18 +165,19 @@ class db_Simulator:
 
     def user_generator(self):
         '''User generated methods'''
-        while True:
-            nickname = self.namer.first_name()
-            if nickname not in self.nickname_list:
-                self.nickname_list.append(nickname)
-                break
+        #while True:
+            #nickname = self.namer.first_name()
+            #if nickname not in self.nickname_list:
+                #self.nickname_list.append(nickname)
+                #break
+        nickname = self.namer.first_name()
         user_id = self.convert_count_value()
         sns_info = self.generate_str(20)
         gender = self.generate_gender()
         birthdate = self.generate_date(datetime.datetime(1980, 1, 1), datetime.datetime(2010, 12, 31))
         exercise_freq = random.randint(0, 7)
         exercise_intensity = random.randint(1, 5)
-        exercise_type = self.exercise_list[random.randint(0, len(self.exercise_list))]
+        exercise_type = self.exercise_list[random.randint(0, len(self.exercise_list) - 1)]
         if gender == "M":
             height = round(random.uniform(165, 190), 1)
             weight = round(random.uniform(60, 100), 1)
@@ -213,6 +218,8 @@ class db_Simulator:
         for _ in range(self.user_num):
             self.count += 1
             self.user_generator()
+            if self.count % 100 == 0:
+                print(f'Complete creation of {self.count} users')
 
         for user_id in self.user_list:
             for _ in range(self.generate_routine_count()):
@@ -224,4 +231,15 @@ class db_Simulator:
         #self.nickname_list.clear()
         #self.serial_list.clear()
 
+db_name = "test"
+user = "testuser2"
+passwd = "test123"
+user_num = 10000
+db_month = 10
+routine_avg = 10
+success_prob_avg = 60
 
+test_obj = db_Simulator(db_name, user, passwd, user_num, db_month, routine_avg, success_prob_avg)
+test_obj.db_connect()
+test_obj.generate_process()
+#test_obj.disconnect_db()
