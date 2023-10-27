@@ -181,7 +181,7 @@ class db_Simulator:
         if gender == "M":
             height = round(random.uniform(165, 190), 1)
             weight = round(random.uniform(60, 100), 1)
-            goal_weight = weight - round(random.uniform(3, 7), 1)
+            goal_weight = round(weight - round(random.uniform(3, 7), 1), 1)
         else:
             height = round(random.uniform(150, 168), 1)
             weight = round(random.uniform(40, 60), 1)
@@ -193,7 +193,7 @@ class db_Simulator:
 
     def routine_log_generator(self, user_id):
         '''Method of adding routine and generating exercise history'''
-        routine_id = self.generate_serial_value(10000, 99999)
+        routine_id = self.generate_serial_value(10000000, 99999999)
         user_id = user_id
         exercise_name = self.generate_str(5)
         start_time = self.generate_time()
@@ -207,7 +207,7 @@ class db_Simulator:
 
         date_list = self.repeat_day(base_date, self.last_day, repetition_value)
         for date in date_list:
-            log_id = self.generate_serial_value(1000000, 9999999)
+            log_id = self.generate_serial_value(100000000, 999999999)
             exercise_date = date.strftime('%Y-%m-%d')
             completed = random.choices(["true", "false"], weights=[self.success_prob, 100 - self.success_prob], k=1)[0]
 
