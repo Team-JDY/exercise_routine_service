@@ -30,7 +30,9 @@
     "prebuild:default": "rm -rf dist",
     "prebuild:windows": "rd /s /q dist || rem",
     "build": "yarn react:build && tsc -p ./electron && electron-builder --publish=never --dir --x64",
-    "lint": "eslint './src/**/*.{ts,tsx,js,jsx}'"
+    "lint": "eslint './src/**/*.{ts,tsx,js,jsx}'",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "build": {
     "productName": "TestAPP",
@@ -78,8 +80,18 @@
     ]
   },
   "devDependencies": {
+    "@storybook/addon-essentials": "7.5.1",
+    "@storybook/addon-interactions": "7.5.1",
+    "@storybook/addon-links": "7.5.1",
+    "@storybook/addon-onboarding": "1.0.8",
+    "@storybook/blocks": "7.5.1",
+    "@storybook/preset-create-react-app": "7.5.1",
+    "@storybook/react": "7.5.1",
+    "@storybook/react-webpack5": "7.5.1",
+    "@storybook/testing-library": "0.2.2",
     "@typescript-eslint/eslint-plugin": "^6.8.0",
     "@typescript-eslint/parser": "^6.8.0",
+    "babel-plugin-named-exports-order": "0.0.2",
     "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
@@ -87,6 +99,10 @@
     "electron-builder": "^24.6.4",
     "eslint": "^8.52.0",
     "eslint-plugin-react": "^7.33.2",
-    "wait-on": "^7.0.1"
+    "eslint-plugin-storybook": "^0.6.15",
+    "prop-types": "15.8.1",
+    "storybook": "7.5.1",
+    "wait-on": "^7.0.1",
+    "webpack": "5.89.0"
   }
 }
