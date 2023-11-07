@@ -1,0 +1,111 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "main": "build/electron/main.js",
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.59",
+    "@types/react": "^18.2.31",
+    "@types/react-dom": "^18.2.14",
+    "electron-is-dev": "^2.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-query": "^3.39.3",
+    "react-router-dom": "^6.18.0",
+    "react-scripts": "5.0.1",
+    "sass": "^1.69.5",
+    "typescript": "^4.9.5",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "react:start": "react-scripts start",
+    "react:build": "react-scripts build",
+    "react:test": "react-scripts test",
+    "react:eject": "react-scripts eject",
+    "dev": "start /b yarn react:start & start /b yarn tsc:watch & start /b yarn electron:start",
+    "tsc:watch": "wait-on http://127.0.0.1:3000 && tsc -p ./electron -w",
+    "electron:start": "wait-on http://127.0.0.1:3000 && tsc -p electron && electron .",
+    "prebuild": "run-script-os",
+    "prebuild:default": "rm -rf dist",
+    "prebuild:windows": "rd /s /q dist || rem",
+    "build": "yarn react:build && tsc -p ./electron && electron-builder --publish=never --dir --x64",
+    "lint": "eslint './src/**/*.{ts,tsx,js,jsx}'",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "build": {
+    "productName": "TestAPP",
+    "appId": "JDY",
+    "npmRebuild": false,
+    "extraMetadata": {
+      "main": "build/electron/main.js"
+    },
+    "files": [
+      "build/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "win": {
+      "icon": "public/logo192.png",
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "mac": {
+      "icon": "public/logo192.png"
+    }
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "7.5.1",
+    "@storybook/addon-interactions": "7.5.1",
+    "@storybook/addon-links": "7.5.1",
+    "@storybook/addon-onboarding": "1.0.8",
+    "@storybook/blocks": "7.5.1",
+    "@storybook/preset-create-react-app": "7.5.1",
+    "@storybook/react": "7.5.1",
+    "@storybook/react-webpack5": "7.5.1",
+    "@storybook/testing-library": "0.2.2",
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/parser": "^6.8.0",
+    "babel-plugin-named-exports-order": "0.0.2",
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.3.1",
+    "electron": "^27.0.2",
+    "electron-builder": "^24.6.4",
+    "eslint": "^8.52.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-storybook": "^0.6.15",
+    "prop-types": "15.8.1",
+    "storybook": "7.5.1",
+    "wait-on": "^7.0.1",
+    "webpack": "5.89.0"
+  }
+}
